@@ -26,38 +26,111 @@
 #include <map>
 #include <stdio.h>
 #include <ctime>
-#include <boost/algorithm/string/trim.hpp>
-#include <boost/algorithm/string/trim_all.hpp>
+
 #include <set>
 
 using namespace v8;
+using namespace std;
 
 
-std::vector<std::string> split(const std::string& s, const std::string& delim) {
-    std::vector<std::string> result;
-    if (delim.empty()) {
-        result.push_back(s);
-        return result;
-    }
-    std::string::const_iterator substart = s.begin(), subend;
-    while (true) {
-        subend = search(substart, s.end(), delim.begin(), delim.end());
-        std::string temp(substart, subend);
-        if (!temp.empty()) {
-            result.push_back(temp);
-        }
-        if (subend == s.end()) {
-            break;
-        }
-        substart = subend + delim.size();
-    }
-    return result;
-}//exit split function
 
+/**********************   PJS parser class *******************************************************/
+class pjs_parser{
+
+
+#define pjsstat_buffer 1
+#define pjsstat_code 2
+#define pjsstat_line 3
+#define pjs_endTag "pjs?>"
+#define pjs_startTag "<?pjs"
+
+private:
+	std::string codeBlock;
+	std::string lineBlock;
+	std::string buffer;
+	int pstat;
+	int num;
+
+public:
+	pjs_parser(){
+		pstat = pjsstat_line;
+		num = 0;
+	};
+	void parsec(char c, void (onIterate) (std::string value, int stat));
+	void parses(std::string input, void (onIterate) (std::string value, int stat));
+};
+
+
+void pjs_parser::parses(std::string input, void (onIterate) (std::string value, int stat)){
+	num = 0;
+	input.append(pjs_endTag);
+	for (unsigned int i = 0; i < input.size(); i++){
+		parsec(input.at(i), onIterate);
+	}
+
+
+	if(!lineBlock.empty()){
+		onIterate(lineBlock, pjsstat_line);
+		lineBlock.clear();
+	}
+
+	if(!codeBlock.empty()){
+		onIterate(codeBlock, pjsstat_line);
+		codeBlock.clear();
+	}
+}
+
+void pjs_parser::parsec(char c, void (onIterate) (std::string value, int stat)){
+
+	buffer+=c;
+
+	if(buffer.size() > 4){
+		num++;
+		if(buffer == pjs_startTag){
+			pstat = pjsstat_code;
+			onIterate(lineBlock, pjsstat_line);
+			lineBlock.clear();
+			buffer.clear();
+		}
+
+		else if(buffer == pjs_endTag){
+			pstat = pjsstat_line;
+			onIterate(codeBlock, pjsstat_code);
+			codeBlock.clear();
+			buffer.clear();
+		}
+
+		else{
+			char d = buffer.at(0);
+			buffer.erase(buffer.begin());
+			if(pstat == pjsstat_code){
+				codeBlock+=d;
+			}
+			else{
+				lineBlock+=d;
+			}
+		}
+	}
+
+}
+
+/**********************  END PJS parser class *******************************************************/
+
+
+/**********************  PROPS:  *******************************************************/
+std::string parsedContent;
+Persistent<Context> context;
+Handle<ObjectTemplate> global_templ;
+pjs_parser parser;
+
+
+
+/**********************  UTILS:  *******************************************************/
 std::string v8StringToStdString(v8::Local<v8::Value> value){
 	v8::String::Utf8Value param(value->ToString());
 	return std::string(*param);
 }
+
 
 
 std::string appendStringFromFile(std::string filename){
@@ -78,25 +151,20 @@ std::string appendStringFromFile(std::string filename){
 			return result;
 		}
 
-		return "ERROR";
+		return "";
 }
 
 
 
+/**********************  v8:  *******************************************************/
 
-
-
-
-
-std::string parsedContent;
 
 Handle<Value> printMessage(const Arguments& args) {
 	HandleScope scope;
 	std::string all;
 	for(int i = 0 ; i < args.Length(); i++){
 		v8::String::Utf8Value param(args[i]->ToString());
-
-		std::cout << std::string(*param) << std::endl;
+		std::cout <<  "print call: " << std::string(*param) << std::endl;
 		parsedContent.append(std::string(*param));
 		all.append(std::string(*param));
 	}
@@ -104,28 +172,65 @@ Handle<Value> printMessage(const Arguments& args) {
 	return scope.Close(String::New(all.c_str()));
 }
 
+Local<Value> internalArgs;
+Handle<Value> args(const Arguments& args) {
+	HandleScope scope;
 
 
-
-
-std::string trim_all ( const std::string &str ) {
-return boost::algorithm::find_format_all_copy(
-    boost::trim_copy(str),
-    boost::algorithm::token_finder (boost::is_space(),boost::algorithm::token_compress_on),
-    boost::algorithm::const_formatter(" "));
+	return scope.Close(internalArgs);
 }
-Persistent<Context> context;
-Handle<ObjectTemplate> global_templ;
 
 
-Handle<Value> Prepare(const Arguments& args) {
+
+
+Handle<Value> CreateContext(const Arguments& args) {
   HandleScope scope;
+
+
 
   global_templ = ObjectTemplate::New();
   global_templ->Set( String::New("print"), FunctionTemplate::New( printMessage ));
+
+
+
+
+
+
   context = Context::New(NULL, global_templ);
   context->AllowCodeGenerationFromStrings(true);
+
+  if(args[0]->IsObject()){
+  	  Handle<Object> data = Handle<Object>::Cast(args[0]);
+  	  context->Global()->Set(String::New("_global"), Local<Object>::New(data));
+
+  //	  global_templ->Set(String::New("_global"), data);
+  //	  cout << v8StringToStdString(global_templ->) << endl;
+    }else{
+//    	internalArgs = Local<Value>::Cast(Local<String>::New("none"));
+    }
+
   return scope.Close(Boolean::New(true));
+}
+
+
+Handle<Value> DestroyContext(const Arguments& args) {
+  HandleScope scope;
+  context.Dispose();
+  return scope.Close(Boolean::New(true));
+}
+
+
+
+void parseHandler(std::string line, int status){
+	if(!line.empty()){
+		if(status == pjsstat_code){
+			Handle<String> source = String::New(line.c_str());
+			Handle<Script> script = Script::Compile(source);
+			script->Run();
+		}else{
+			parsedContent.append(line);
+		}
+	}
 }
 
 std::string parseContent(std::string input, Handle<Function> function){
@@ -133,42 +238,17 @@ std::string parseContent(std::string input, Handle<Function> function){
 	using namespace std;
 	parsedContent.clear();
 
-
-
 	context->Enter();
 
-	input = trim_all(input);
 
-	vector<string> res1 = split(input, "<?stone");
+	parser.parses(input, parseHandler);
 
-	for(int i = 0 ; i < (int)res1.size(); i++){
-
-		vector<string> res2 = split(res1.at(i), "?>");
-
-		for(int a = 0 ; a < (int)res2.size(); a++){
-			string currentBlock = res2.at(a);
-			trim_all(currentBlock);
-			if(currentBlock.at(currentBlock.size()-1) == '@'){
-				currentBlock = currentBlock.substr(0, currentBlock.size()-1);
-				Handle<String> source = String::New(currentBlock.c_str());
-				Handle<Script> script = Script::Compile(source);
-				script->Run();
-
-			}else{
-				parsedContent.append(currentBlock);
-			}
-		}
-
-	}
-
+	//callback
 	Handle<Value> args[1];
 	args[0] = v8::String::New(parsedContent.c_str());
 	Handle<v8::Object> global = context->Global();
 	function->Call(global, 1, args);
-
 	context->Exit();
-//	context.Dispose();
-
 	return input;
 }
 
@@ -182,10 +262,9 @@ Handle<Value> LoadFile(const Arguments& args) {
 	  string fileContent =  appendStringFromFile(fileName);
 	  Handle<Function> func = v8::Handle<v8::Function>::Cast(args[1]);
 	  parseContent(fileContent, func);
-
   }
 
-  return scope.Close(String::New("world"));
+  return scope.Close(Boolean::New(true));
 }
 
 
@@ -193,13 +272,14 @@ Handle<Value> LoadFile(const Arguments& args) {
 Handle<Value> Parse(const Arguments& args) {
   HandleScope scope;
 
-  using namespace std;
+  if(args[0]->IsString() && args[1]->IsFunction()){
+  	  string content = v8StringToStdString(args[0]);
 
-  if(args[0]->IsString()){
+  	  Handle<Function> func = v8::Handle<v8::Function>::Cast(args[1]);
+  	  parseContent(content, func);
+    }
 
-  }
-
-  return scope.Close(String::New("world"));
+  return scope.Close(Boolean::New(true));
 }
 
 
@@ -211,8 +291,8 @@ Handle<Value> Parse(const Arguments& args) {
 
 
 void init(Handle<Object> exports) {
-
-	exports->Set(String::NewSymbol("createContext"), FunctionTemplate::New(Prepare)->GetFunction());
+	exports->Set(String::NewSymbol("createContext"), FunctionTemplate::New(CreateContext)->GetFunction());
+	exports->Set(String::NewSymbol("destroyContext"), FunctionTemplate::New(DestroyContext)->GetFunction());
 	exports->Set(String::NewSymbol("loadFile"), FunctionTemplate::New(LoadFile)->GetFunction());
 	exports->Set(String::NewSymbol("parse"), FunctionTemplate::New(Parse)->GetFunction());
 }

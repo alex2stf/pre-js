@@ -1,1 +1,21 @@
-.body{ padding:0px; } /*you can place any type of code in here, even scss*/  ul{ list-style-type:none; } .className{font-size:20px;} div{ background:green; }  li:nth-child(1){ background: red; }  li:nth-child(2){ background: blue; }  li:nth-child(3){ background: orange; } 
+
+</ul>.body{
+    padding:0px;
+}
+
+/*you can place any type of code in here, even scss*/
+
+
+
+
+ul{
+    list-style-type:none;
+}
+
+.className{font-size:20px;}
+
+div{
+    background:green;
+}
+
+ li:nth-child(1){ background: red; }  li:nth-child(2){ background: blue; }  li:nth-child(3){ background: orange; } 
