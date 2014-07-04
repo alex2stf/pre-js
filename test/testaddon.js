@@ -41,7 +41,7 @@ sten.loadFile('test/workdir/input.html', function(response) {
     fs.writeFile('test/workdir/output.html', response);
 });
 
-// if the context is not destroyed you have access to variables defined in previous file
+/* if the context is not destroyed you have access to variables defined in previous file  */
 sten.loadFile('test/workdir/input.css', function(response) {
 	console.log('js:'+response);
     fs.writeFile('test/workdir/output.css', response);
@@ -52,8 +52,3 @@ sten.loadFile('test/workdir/input.css', function(response) {
 var x = sten.cin("and this a cin method: just type something >> ");
 console.log('you typed "'+x+'" THANKS!');
 
-
-
-
-
-//console.log(a);
