@@ -1,6 +1,4 @@
-//git add . --all
-//git commit -m "adding npm details"
-//git push -u origin master
+
 
 
 var preJs = require('../build/Release/prejs');
@@ -31,19 +29,19 @@ preJs.createContext(settings);
 var str2 = "hi this is another sample using <?pjs this.number=4; print(string, ' ',  data[2])  pjs?> and 'this': var a = '<?pjsprint(data[1])pjs?>'  and var b = '<?pjsprint(data[0], this.number)pjs?>';";
 
 preJs.parse(str2, function(respone){
-	console.log('__: 2nd parsed content:');
+	console.log('js: 2nd parsed content:');
 	console.log('js: '+respone);
 });
 
 
 preJs.loadFile('test/workdir/input.html', function(response) {
-    console.log(response);
+    console.log('js:'+response);
     fs.writeFile('test/workdir/output.html', response);
 });
 
-// if the context is not destroyed you have access to variables defined in other files
+// if the context is not destroyed you have access to variables defined in previous file
 preJs.loadFile('test/workdir/input.css', function(response) {
-	console.log(response);
+	console.log('js:'+response);
     fs.writeFile('test/workdir/output.css', response);
 
 });

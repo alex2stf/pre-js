@@ -1,24 +1,32 @@
 {
-    "name": "pre-js",
-    "version": "0.1.0",
-    "author": "Alexandru Stefan",
-    "description": "preprocessed javascript template",
-    "main": "index.js",
-    "engines": {
-        "node": "0.10.x"
-    },
-    "dependencies": {
-    },
-    "devDependencies": {
-    },
-    "scripts": {
-        "test": "node test/testmodule.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/alex2stf/pre-js.git"
-    },
-    "keywords": [
-        "addon"
-    ]
+  "name": "pre-js",
+  "version": "0.1.0",
+  "author": "Alexandru Stefan",
+  "description": "preprocessed javascript template",
+  "main": "index.js",
+  "engines": {
+    "node": "0.10.x"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "node test/testmodule.js",
+    "install": "node-gyp rebuild"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/alex2stf/pre-js.git"
+  },
+  "keywords": [
+    "addon"
+  ],
+  "gypfile": true,
+  "bugs": {
+    "url": "https://github.com/alex2stf/pre-js/issues"
+  },
+  "homepage": "https://github.com/alex2stf/pre-js",
+  "directories": {
+    "test": "test"
+  },
+  "license": "ISC"
 }
