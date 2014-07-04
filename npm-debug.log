@@ -1,24 +1,133 @@
 0 info it worked if it ends with ok
-1 verbose cli [ 'node', '/usr/local/bin/npm', 'version', 'patch' ]
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'publish' ]
 2 info using npm@1.4.9
 3 info using node@v0.10.28
-4 error Error: Git working directory not clean.
-4 error M npm-debug.log
-4 error M package.json
-4 error M test/testaddon.js
-4 error     at /usr/local/lib/node_modules/npm/lib/version.js:98:35
-4 error     at ChildProcess.exithandler (child_process.js:645:7)
-4 error     at ChildProcess.EventEmitter.emit (events.js:98:17)
-4 error     at maybeClose (child_process.js:753:16)
-4 error     at Socket.<anonymous> (child_process.js:966:11)
-4 error     at Socket.EventEmitter.emit (events.js:95:17)
-4 error     at Pipe.close (net.js:465:12)
-5 error If you need help, you may report this *entire* log,
-5 error including the npm and node versions, at:
-5 error     <http://github.com/npm/npm/issues>
-6 error System Darwin 12.5.0
-7 error command "node" "/usr/local/bin/npm" "version" "patch"
-8 error cwd /Users/alexandru/Google Drive/pre-js
-9 error node -v v0.10.28
-10 error npm -v 1.4.9
-11 verbose exit [ 1, true ]
+4 verbose publish [ '.' ]
+5 verbose cache add [ '.', null ]
+6 verbose cache add name=undefined spec="." args=[".",null]
+7 verbose parsed url { protocol: null,
+7 verbose parsed url   slashes: null,
+7 verbose parsed url   auth: null,
+7 verbose parsed url   host: null,
+7 verbose parsed url   port: null,
+7 verbose parsed url   hostname: null,
+7 verbose parsed url   hash: null,
+7 verbose parsed url   search: null,
+7 verbose parsed url   query: null,
+7 verbose parsed url   pathname: '.',
+7 verbose parsed url   path: '.',
+7 verbose parsed url   href: '.' }
+8 silly lockFile 3a52ce78- .
+9 verbose lock . /Users/alexandru/.npm/3a52ce78-.lock
+10 verbose tar pack [ '/var/folders/qz/nx5w57z519vgzqth_2my5hcc0000gr/T/npm-25046-3i1FWjQe/1404485197186-0.9023965401574969/tmp.tgz',
+10 verbose tar pack   '.' ]
+11 verbose tarball /var/folders/qz/nx5w57z519vgzqth_2my5hcc0000gr/T/npm-25046-3i1FWjQe/1404485197186-0.9023965401574969/tmp.tgz
+12 verbose folder .
+13 info prepublish pre-js@0.1.0
+14 silly lockFile 1f1177db-tar tar://.
+15 verbose lock tar://. /Users/alexandru/.npm/1f1177db-tar.lock
+16 silly lockFile 399a6dff-97186-0-9023965401574969-tmp-tgz tar:///var/folders/qz/nx5w57z519vgzqth_2my5hcc0000gr/T/npm-25046-3i1FWjQe/1404485197186-0.9023965401574969/tmp.tgz
+17 verbose lock tar:///var/folders/qz/nx5w57z519vgzqth_2my5hcc0000gr/T/npm-25046-3i1FWjQe/1404485197186-0.9023965401574969/tmp.tgz /Users/alexandru/.npm/399a6dff-97186-0-9023965401574969-tmp-tgz.lock
+18 silly lockFile 1f1177db-tar tar://.
+19 silly lockFile 1f1177db-tar tar://.
+20 silly lockFile 399a6dff-97186-0-9023965401574969-tmp-tgz tar:///var/folders/qz/nx5w57z519vgzqth_2my5hcc0000gr/T/npm-25046-3i1FWjQe/1404485197186-0.9023965401574969/tmp.tgz
+21 silly lockFile 399a6dff-97186-0-9023965401574969-tmp-tgz tar:///var/folders/qz/nx5w57z519vgzqth_2my5hcc0000gr/T/npm-25046-3i1FWjQe/1404485197186-0.9023965401574969/tmp.tgz
+22 verbose tar unpack /var/folders/qz/nx5w57z519vgzqth_2my5hcc0000gr/T/npm-25046-3i1FWjQe/1404485197186-0.9023965401574969/tmp.tgz
+23 silly lockFile d85594b5-exandru-npm-pre-js-0-1-0-package tar:///Users/alexandru/.npm/pre-js/0.1.0/package
+24 verbose lock tar:///Users/alexandru/.npm/pre-js/0.1.0/package /Users/alexandru/.npm/d85594b5-exandru-npm-pre-js-0-1-0-package.lock
+25 silly lockFile 399a6dff-97186-0-9023965401574969-tmp-tgz tar:///var/folders/qz/nx5w57z519vgzqth_2my5hcc0000gr/T/npm-25046-3i1FWjQe/1404485197186-0.9023965401574969/tmp.tgz
+26 verbose lock tar:///var/folders/qz/nx5w57z519vgzqth_2my5hcc0000gr/T/npm-25046-3i1FWjQe/1404485197186-0.9023965401574969/tmp.tgz /Users/alexandru/.npm/399a6dff-97186-0-9023965401574969-tmp-tgz.lock
+27 silly gunzTarPerm modes [ '755', '644' ]
+28 silly gunzTarPerm extractEntry package.json
+29 silly gunzTarPerm extractEntry README.md
+30 silly gunzTarPerm extractEntry index.js
+31 silly gunzTarPerm extractEntry .cproject
+32 silly gunzTarPerm extractEntry .project
+33 silly gunzTarPerm extractEntry bin/prejs.node
+34 silly gunzTarPerm extractEntry binding.gyp
+35 silly gunzTarPerm extractEntry build/Makefile
+36 silly gunzTarPerm extractEntry build/Release/.deps/Release/obj.target/prejs/prejs.o.d
+37 silly gunzTarPerm extractEntry build/Release/.deps/Release/obj.target/prejs/src/prejs.o.d
+38 silly gunzTarPerm extractEntry build/Release/.deps/Release/prejs.node.d
+39 silly gunzTarPerm extractEntry build/Release/linker.lock
+40 silly gunzTarPerm extractEntry build/Release/obj.target/prejs/prejs.o
+41 silly gunzTarPerm extractEntry build/Release/obj.target/prejs/src/prejs.o
+42 silly gunzTarPerm extractEntry build/Release/prejs.node
+43 silly gunzTarPerm extractEntry build/binding.Makefile
+44 silly gunzTarPerm extractEntry build/config.gypi
+45 silly gunzTarPerm extractEntry build/gyp-mac-tool
+46 silly gunzTarPerm extractEntry build/prejs.target.mk
+47 silly gunzTarPerm extractEntry src/prejs.cc
+48 silly gunzTarPerm extractEntry test/testaddon.js
+49 silly gunzTarPerm extractEntry test/testmodule.js
+50 silly gunzTarPerm extractEntry test/workdir/input.css
+51 silly gunzTarPerm extractEntry test/workdir/input.html
+52 silly gunzTarPerm extractEntry test/workdir/output.css
+53 silly gunzTarPerm extractEntry test/workdir/output.html
+54 silly lockFile d85594b5-exandru-npm-pre-js-0-1-0-package tar:///Users/alexandru/.npm/pre-js/0.1.0/package
+55 silly lockFile d85594b5-exandru-npm-pre-js-0-1-0-package tar:///Users/alexandru/.npm/pre-js/0.1.0/package
+56 silly lockFile 399a6dff-97186-0-9023965401574969-tmp-tgz tar:///var/folders/qz/nx5w57z519vgzqth_2my5hcc0000gr/T/npm-25046-3i1FWjQe/1404485197186-0.9023965401574969/tmp.tgz
+57 silly lockFile 399a6dff-97186-0-9023965401574969-tmp-tgz tar:///var/folders/qz/nx5w57z519vgzqth_2my5hcc0000gr/T/npm-25046-3i1FWjQe/1404485197186-0.9023965401574969/tmp.tgz
+58 silly lockFile 3a52ce78- .
+59 silly lockFile 3a52ce78- .
+60 silly publish { name: 'pre-js',
+60 silly publish   version: '0.1.0',
+60 silly publish   author: { name: 'Alexandru Stefan' },
+60 silly publish   description: 'preprocessed javascript template',
+60 silly publish   main: 'index.js',
+60 silly publish   engines: { node: '0.10.x' },
+60 silly publish   dependencies: {},
+60 silly publish   devDependencies: {},
+60 silly publish   scripts: { test: 'node test/testmodule.js', install: 'node-gyp rebuild' },
+60 silly publish   repository: { type: 'git', url: 'git://github.com/alex2stf/pre-js.git' },
+60 silly publish   keywords: [ 'addon' ],
+60 silly publish   gypfile: true,
+60 silly publish   readme: 'ERROR: No README data found!',
+60 silly publish   readmeFilename: 'README.md',
+60 silly publish   bugs: { url: 'https://github.com/alex2stf/pre-js/issues' },
+60 silly publish   homepage: 'https://github.com/alex2stf/pre-js',
+60 silly publish   _id: 'pre-js@0.1.0',
+60 silly publish   _shasum: 'a24e6513daef8626c0c0a0440a39b04b69220e44',
+60 silly publish   _from: '.' }
+61 verbose url raw pre-js
+62 verbose url resolving [ 'https://registry.npmjs.org/', './pre-js' ]
+63 verbose url resolved https://registry.npmjs.org/pre-js
+64 info trying registry request attempt 1 at 17:46:37
+65 http PUT https://registry.npmjs.org/pre-js
+66 http 403 https://registry.npmjs.org/pre-js
+67 verbose headers { date: 'Fri, 04 Jul 2014 14:46:37 GMT',
+67 verbose headers   server: 'CouchDB/1.5.0 (Erlang OTP/R14B04)',
+67 verbose headers   'content-type': 'application/json',
+67 verbose headers   'cache-control': 'max-age=30',
+67 verbose headers   'content-length': '1934',
+67 verbose headers   'accept-ranges': 'bytes',
+67 verbose headers   via: '1.1 varnish',
+67 verbose headers   'x-served-by': 'cache-fra1224-FRA',
+67 verbose headers   'x-cache': 'MISS',
+67 verbose headers   'x-cache-hits': '0',
+67 verbose headers   'x-timer': 'S1404485196.635746,VS0,VE1340',
+67 verbose headers   'keep-alive': 'timeout=10, max=50',
+67 verbose headers   connection: 'Keep-Alive' }
+68 error publish Failed PUT 403
+69 error Error: forbidden cannot modify pre-existing version: 0.1.0
+69 error old={"name":"pre-js","version":"0.1.0","description":"resilient, efficient resource loader","main":"index.js","directories":{"test":"test"},"dependencies":{"chai":"~1.9.1","sinon":"~1.8.2"},"devDependencies":{"mocha":"~1.17.1","coffee-script":"~1.7.1"},"scripts":{"test":"mocha","prepublish":"make && mocha"},"author":{"name":"Rico Sta. Cruz","email":"hi@ricostacruz.com"},"license":"MIT","_id":"pre-js@0.1.0","dist":{"shasum":"cd3338416b16a210ee6ba1b3c8c771535ed6b57a","tarball":"http://registry.npmjs.org/pre-js/-/pre-js-0.1.0.tgz"},"_from":".","_npmVersion":"1.4.3","_npmUser":{"name":"rstacruz","email":"rico@ricostacruz.com"},"maintainers":[{"name":"rstacruz","email":"rico@ricostacruz.com"}]}
+69 error new={"name":"pre-js","version":"0.1.0","author":{"name":"Alexandru Stefan"},"description":"preprocessed javascript template","main":"index.js","engines":{"node":"0.10.x"},"dependencies":{},"devDependencies":{},"scripts":{"test":"node test/testmodule.js","install":"node-gyp rebuild"},"repository":{"type":"git","url":"git://github.com/alex2stf/pre-js.git"},"keywords":["addon"],"gypfile":true,"readme":"ERROR: No README data found!","readmeFilename":"README.md","bugs":{"url":"https://github.com/alex2stf/pre-js/issues"},"homepage":"https://github.com/alex2stf/pre-js","_id":"pre-js@0.1.0","_shasum":"a24e6513daef8626c0c0a0440a39b04b69220e44","_from":".","_npmVersion":"1.4.9","_npmUser":{"name":"alex2stf","email":"alex2stf@yahoo.com"},"maintainers":[{"name":"alex2stf","email":"alex2stf@yahoo.com"}],"dist":{"shasum":"a24e6513daef8626c0c0a0440a39b04b69220e44","tarball":"http://registry.npmjs.org/pre-js/-/pre-js-0.1.0.tgz"}}: pre-js
+69 error     at RegClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:273:14)
+69 error     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:211:65)
+69 error     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:123:22)
+69 error     at Request.EventEmitter.emit (events.js:98:17)
+69 error     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:893:14)
+69 error     at Request.EventEmitter.emit (events.js:117:20)
+69 error     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:844:12)
+69 error     at IncomingMessage.EventEmitter.emit (events.js:117:20)
+69 error     at _stream_readable.js:919:16
+69 error     at process._tickCallback (node.js:419:13)
+70 error If you need help, you may report this *entire* log,
+70 error including the npm and node versions, at:
+70 error     <http://github.com/npm/npm/issues>
+71 error System Darwin 12.5.0
+72 error command "node" "/usr/local/bin/npm" "publish"
+73 error cwd /Users/alexandru/Google Drive/pre-js
+74 error node -v v0.10.28
+75 error npm -v 1.4.9
+76 verbose exit [ 1, true ]
