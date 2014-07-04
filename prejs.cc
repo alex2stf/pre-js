@@ -58,6 +58,14 @@ public:
 	};
 	void parsec(char c, void (onIterate) (std::string value, int stat));
 	void parses(std::string input, void (onIterate) (std::string value, int stat));
+
+	void flush(){
+		codeBlock.clear();
+		lineBlock.clear();
+		buffer.clear();
+		num = 0;
+		pstat = pjsstat_line;
+	}
 };
 
 
@@ -133,26 +141,7 @@ std::string v8StringToStdString(v8::Local<v8::Value> value){
 
 
 
-std::string appendStringFromFile(std::string filename){
-	using namespace std;
 
-		FILE* myfile = fopen(filename.c_str(), "r");
-		char ch;
-		std::string result;
-
-		if (myfile != NULL) {
-
-			while( ( ch = fgetc(myfile) ) != EOF ){
-			      result+= ch;
-			}
-
-
-			fclose(myfile);
-			return result;
-		}
-
-		return "";
-}
 
 
 
@@ -172,13 +161,13 @@ Handle<Value> printMessage(const Arguments& args) {
 	return scope.Close(String::New(all.c_str()));
 }
 
-Local<Value> internalArgs;
-Handle<Value> args(const Arguments& args) {
-	HandleScope scope;
 
 
-	return scope.Close(internalArgs);
-}
+
+
+
+
+
 
 
 
@@ -193,22 +182,20 @@ Handle<Value> CreateContext(const Arguments& args) {
 
 
 
+  if(args[0]->IsObject()){
+	  Handle<Object> obj = Handle<Object>::Cast(args[0]);
+	  const Local<Array> props = obj->GetPropertyNames();
+	  const uint32_t length = props->Length();
 
-
+	  for (uint32_t i=0 ; i<length ; ++i)
+	  {
+	      Local<String> key =Local<String>::Cast(props->Get(i)) ;
+	      global_templ->Set(key, Handle<Object>::Cast(obj->Get(key)));
+	  }
+    }
 
   context = Context::New(NULL, global_templ);
   context->AllowCodeGenerationFromStrings(true);
-
-  if(args[0]->IsObject()){
-  	  Handle<Object> data = Handle<Object>::Cast(args[0]);
-  	  context->Global()->Set(String::New("_global"), Local<Object>::New(data));
-
-  //	  global_templ->Set(String::New("_global"), data);
-  //	  cout << v8StringToStdString(global_templ->) << endl;
-    }else{
-//    	internalArgs = Local<Value>::Cast(Local<String>::New("none"));
-    }
-
   return scope.Close(Boolean::New(true));
 }
 
@@ -237,6 +224,7 @@ std::string parseContent(std::string input, Handle<Function> function){
 
 	using namespace std;
 	parsedContent.clear();
+	parser.flush();
 
 	context->Enter();
 
@@ -252,16 +240,55 @@ std::string parseContent(std::string input, Handle<Function> function){
 	return input;
 }
 
+
+
+std::string appendStringFromFile(std::string filename, Handle<Function> callback){
+
+
+		FILE* myfile = fopen(filename.c_str(), "r");
+		char ch;
+		std::string result;
+
+		if (myfile != NULL) {
+			context->Enter();
+			while( ( ch = fgetc(myfile) ) != EOF ){
+			      result+= ch;
+			      parser.parsec(ch, parseHandler);
+			}
+
+			fclose(myfile);
+
+			parser.parsec(' ', parseHandler);
+			parser.parsec(' ', parseHandler);
+			parser.parsec(' ', parseHandler);
+			parser.parsec(' ', parseHandler);
+
+
+			Handle<Value> args[1];
+			args[0] = v8::String::New(parsedContent.c_str());
+			callback->Call(context->Global(), 1, args);
+			context->Exit();
+			return result;
+		}
+
+		return "";
+}
+
 Handle<Value> LoadFile(const Arguments& args) {
   HandleScope scope;
 
-  using namespace std;
+  parsedContent.clear();
+  parser.flush();
+
 
   if(args[0]->IsString() && args[1]->IsFunction()){
 	  string fileName = v8StringToStdString(args[0]);
-	  string fileContent =  appendStringFromFile(fileName);
 	  Handle<Function> func = v8::Handle<v8::Function>::Cast(args[1]);
-	  parseContent(fileContent, func);
+	  appendStringFromFile(fileName, func);
+//	  cout << fileName << endl;
+//	  appendStringFromFile(fileName);
+//
+//	  parseContent(fileContent, func);
   }
 
   return scope.Close(Boolean::New(true));

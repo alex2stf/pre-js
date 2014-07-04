@@ -3,10 +3,15 @@
 <ul>
 <?pjs
 
-var list = ['red', 'blue', 'orange'];
+this.colors = [];
+for(var a = 0; a < 256; a++){
+   this.colors.push({r:a, g:Math.abs(a-255), b:136, id:a});
+}
 
-for(var i = 0 ; i < list.length; i++){
-    print('<li id="'+list[i]+'">'+list[i]+'</li>');
+
+
+for(var i = 0 ; i < this.colors.length; i++){
+    print('<li id="'+this.colors[i].id+'">'+ 'rgb(' +this.colors[i].r+ ", " + this.colors[i].g + ", " + this.colors[i].b +')</li>');
 }
 
 pjs?>

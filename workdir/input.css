@@ -1,12 +1,8 @@
 .body{
     padding:0px;
 }
-
-/*you can place any type of code in here, even scss*/
-
-
 <?pjs
-this.list = ['red', 'blue', 'orange'];
+
 pjs?>
 
 ul{
@@ -22,7 +18,7 @@ div{
 }
 
 <?pjs
-for(var i = 0 ; i < this.list.length; i++){
-    print(' li:nth-child('+(i+1)+'){ background: '+this.list[i]+'; } ');
+for(var i = 0 ; i < this.colors.length; i++){
+    print(' li:nth-child('+(i+1)+'){ background: rgb('+this.colors[i].r+', '+this.colors[i].g + ', '+this.colors[i].b+') } \n');
 }
 pjs?>
