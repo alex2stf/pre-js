@@ -1,3 +1,3 @@
 var prejs = null;
-prejs = require('./build/Release/prejs');
+prejs = require('./build/Release/sten');
 module.exports = prejs;

@@ -1,7 +1,9 @@
+//git add . --all
+//git commit -m "adding npm details"
+//git push -u origin master
 
 
-
-var preJs = require('../build/Release/prejs');
+var preJs = require('../build/Release/sten');
 var fs = require('fs');
 
 

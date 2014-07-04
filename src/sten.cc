@@ -321,5 +321,5 @@ void init(Handle<Object> exports) {
 	exports->Set(String::NewSymbol("parse"), FunctionTemplate::New(Parse)->GetFunction());
 }
 
-NODE_MODULE(prejs, init)
+NODE_MODULE(sten, init)
 

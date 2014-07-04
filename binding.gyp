@@ -4,8 +4,8 @@
  	
     	
     {
-      "target_name": "prejs"
-      ,"sources": [ "src/prejs.cc"]
+      "target_name": "sten"
+      ,"sources": [ "src/sten.cc"]
     }
   ]
 }

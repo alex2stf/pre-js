@@ -334,12 +334,12 @@ $(obj).$(TOOLSET)/%.o: $(obj)/%.s FORCE_DO_CMD
 
 ifeq ($(strip $(foreach prefix,$(NO_LOAD),\
     $(findstring $(join ^,$(prefix)),\
-                 $(join ^,prejs.target.mk)))),)
-  include prejs.target.mk
+                 $(join ^,sten.target.mk)))),)
+  include sten.target.mk
 endif
 
 quiet_cmd_regen_makefile = ACTION Regenerating $@
-cmd_regen_makefile = /usr/local/lib/node_modules/node-gyp/gyp/gyp -fmake --ignore-environment "--toplevel-dir=." "-I/Users/alexandru/Google Drive/pre-js/build/config.gypi" -I/usr/local/lib/node_modules/node-gyp/addon.gypi -I/Users/alexandru/.node-gyp/0.10.28/common.gypi "--depth=." "-Goutput_dir=." "--generator-output=build" "-Dlibrary=shared_library" "-Dvisibility=default" "-Dnode_root_dir=/Users/alexandru/.node-gyp/0.10.28" "-Dmodule_root_dir=/Users/alexandru/Google Drive/pre-js" binding.gyp
+cmd_regen_makefile = /usr/local/lib/node_modules/node-gyp/gyp/gyp -fmake --ignore-environment "--toplevel-dir=." "-I/Users/alexandru/Google Drive/sten-js/build/config.gypi" -I/usr/local/lib/node_modules/node-gyp/addon.gypi -I/Users/alexandru/.node-gyp/0.10.28/common.gypi "--depth=." "-Goutput_dir=." "--generator-output=build" "-Dlibrary=shared_library" "-Dvisibility=default" "-Dnode_root_dir=/Users/alexandru/.node-gyp/0.10.28" "-Dmodule_root_dir=/Users/alexandru/Google Drive/sten-js" binding.gyp
 Makefile: $(srcdir)/../../.node-gyp/0.10.28/common.gypi $(srcdir)/build/config.gypi $(srcdir)/binding.gyp $(srcdir)/../../../../usr/local/lib/node_modules/node-gyp/addon.gypi
 	$(call do_cmd,regen_makefile)
 
