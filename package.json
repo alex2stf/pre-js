@@ -1,0 +1,21 @@
+{
+    "name": "pre-js",
+    "version": "0.1.0",
+    "author": "Alexandru Stefan",
+    "description": "preprocessed javascript template",
+    "main": "index.js",
+    "engines": {
+        "node": "0.10.x"
+    },
+    "dependencies": {
+    },
+    "devDependencies": {
+    },
+    "scripts": {
+        "test": "node test/testmodule.js"
+    },
+    "repository": "",
+    "keywords": [
+        "addon"
+    ]
+}
