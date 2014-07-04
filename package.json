@@ -14,7 +14,10 @@
     "scripts": {
         "test": "node test/testmodule.js"
     },
-    "repository": "",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/alex2stf/pre-js.git"
+    },
     "keywords": [
         "addon"
     ]
