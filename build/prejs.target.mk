@@ -83,7 +83,7 @@ INCS_Release := \
 	-I/Users/alexandru/.node-gyp/0.10.28/deps/v8/include
 
 OBJS := \
-	$(obj).target/$(TARGET)/prejs.o
+	$(obj).target/$(TARGET)/src/prejs.o
 
 # Add to the list of files we specially track dependencies for.
 all_deps += $(OBJS)

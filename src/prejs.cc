@@ -153,7 +153,7 @@ Handle<Value> printMessage(const Arguments& args) {
 	std::string all;
 	for(int i = 0 ; i < args.Length(); i++){
 		v8::String::Utf8Value param(args[i]->ToString());
-		std::cout <<  "print call: " << std::string(*param) << std::endl;
+//		std::cout <<  "print call: " << std::string(*param) << std::endl;
 		parsedContent.append(std::string(*param));
 		all.append(std::string(*param));
 	}
@@ -310,6 +310,21 @@ Handle<Value> Parse(const Arguments& args) {
 }
 
 
+Handle<Value> Cin(const Arguments& args) {
+  HandleScope scope;
+
+  if(args[0]->IsString()){
+	  Local<String> out = Local<String>::Cast(args[0]);
+	  cout << v8StringToStdString(out);
+  }
+  string resp;
+  cin >> resp;
+
+
+  return scope.Close(String::New(resp.c_str()));
+}
+
+
 
 
 
@@ -318,6 +333,7 @@ Handle<Value> Parse(const Arguments& args) {
 
 
 void init(Handle<Object> exports) {
+	exports->Set(String::NewSymbol("cin"), FunctionTemplate::New(Cin)->GetFunction());
 	exports->Set(String::NewSymbol("createContext"), FunctionTemplate::New(CreateContext)->GetFunction());
 	exports->Set(String::NewSymbol("destroyContext"), FunctionTemplate::New(DestroyContext)->GetFunction());
 	exports->Set(String::NewSymbol("loadFile"), FunctionTemplate::New(LoadFile)->GetFunction());
