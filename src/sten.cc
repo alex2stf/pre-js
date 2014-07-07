@@ -22,8 +22,8 @@ class pjs_parser{
 #define pjsstat_buffer 1
 #define pjsstat_code 2
 #define pjsstat_line 3
-#define pjs_endTag "pjs?>"
-#define pjs_startTag "<?pjs"
+#define pjs_endTag "stn?>"
+#define pjs_startTag "<?stn"
 
 private:
 	std::string codeBlock;

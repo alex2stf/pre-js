@@ -10,7 +10,7 @@ var fs = require('fs');
 sten.createContext();
 
 /*basic parser: *****************************************************************************************************************/
-var str = "hi this is some random <?pjs var arr= ['s', 't', 'r', 'i', 'n', 'g'];  print(arr.join('-'))  pjs?> to parse";
+var str = "hi this is some random <?stn var arr= ['s', 't', 'r', 'i', 'n', 'g'];  print(arr.join('-'))  stn?> to parse";
 
 sten.parse(str, function(respone){
 	console.log('__: parsed content:');
@@ -28,7 +28,7 @@ var settings = {
 }
 sten.createContext(settings);
 
-var str2 = "hi this is another sample using <?pjs this.number=4; print(string, ' ',  data[2])  pjs?> and 'this': var a = '<?pjsprint(data[1])pjs?>'  and var b = '<?pjsprint(data[0], this.number)pjs?>';";
+var str2 = "hi this is another sample using <?stn this.number=4; print(string, ' ',  data[2])  stn?> and 'this': var a = '<?stnprint(data[1])stn?>'  and var b = '<?stnprint(data[0], this.number)stn?>';";
 
 sten.parse(str2, function(respone){
 	console.log('js: 2nd parsed content:');
