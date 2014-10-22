@@ -1,6 +1,6 @@
 sten-js
 =========
-### Simple Template ENgine
+### Simple Template Engine
 
 `sten-js` is a basic easy-to-use template engine for nodejs.<br/>
 All code placed inside `<?stn` and `stn?>` tags will be compiled into a separate javascript context.

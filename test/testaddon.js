@@ -1,3 +1,8 @@
+//git add . --all
+//git commit -m "adding npm details"
+//git push -u origin master
+
+
 var sten = require('../build/Release/sten');
 var fs = require('fs');
 

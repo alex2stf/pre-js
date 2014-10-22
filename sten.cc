@@ -268,7 +268,6 @@ Handle<Value> LoadFile(const Arguments& args) {
 	  appendStringFromFile(fileName, func);
 //	  cout << fileName << endl;
 //	  appendStringFromFile(fileName);
-//
 //	  parseContent(fileContent, func);
   }
 
